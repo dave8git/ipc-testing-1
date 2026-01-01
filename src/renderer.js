@@ -1,8 +1,7 @@
 const sendMessage = document.getElementById('send-message');
 
-sendMessage.addEventListener('click', () => {
-    console.log('dupa')
-    window.systemAPI.sendMessage('How are you main?')
-});
+sendMessage.addEventListener('click', () =>  window.systemAPI.getSystemInfo());
 
-window.systemAPI.onMessage((data) => alert(data))
+window.systemAPI.onSystemInfo((info) => {
+    alert(`Platform: ${info.platform}, CpuCount: ${info.cpuCount}, Memory: ${info.memory}`)
+});

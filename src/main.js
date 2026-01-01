@@ -1,5 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
+const { platform } = require('node:os');
 const path = require('node:path');
+const os = require('os');
 let mainWindow;
 
 if (require('electron-squirrel-startup')) {
@@ -18,9 +20,12 @@ const createWindow = () => {
   mainWindow.webContents.openDevTools();
 };
 
-ipcMain.on('send-to-main', (_event, data) => {
-    console.log(data);
-    mainWindow.webContents.send('send-to-renderer', 'Hey render, all is good :)');
+ipcMain.on('get-system-info', () => {
+  mainWindow.webContents.send('system-info', {
+    platform: os.platform(),
+    cpuCount: os.cpus().length,
+    memory: os.totalmem()
+  });
 });
 
 app.whenReady().then(() => {

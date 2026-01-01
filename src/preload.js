@@ -4,6 +4,6 @@ console.log('Process type:', process.type); // Should be 'renderer'
 const { ipcRenderer, contextBridge } = require('electron');
 
 contextBridge.exposeInMainWorld('systemAPI', {
-    sendMessage: (data) => ipcRenderer.send('send-to-main', data), 
-    onMessage: (cb) => ipcRenderer.on('send-to-renderer', (_event, data) => cb(data)),
+    getSystemInfo: () => ipcRenderer.send('get-system-info'),
+    onSystemInfo: (cb) => ipcRenderer.on('system-info', (_event, data) => cb(data))
 });
